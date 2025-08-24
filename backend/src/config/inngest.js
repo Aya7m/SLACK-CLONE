@@ -7,7 +7,7 @@ import { ENV } from "./env.js";
 export const inngest = new Inngest({
   id: "slack_clone",
   name: "Slack Clone Functions",
-  clientSecret: ENV.INNGEST_SIGN_KEY,
+  signingKey: ENV.INNGEST_SIGN_KEY,
 });
 
 // Create an Inngest function: Sync user from Clerk
