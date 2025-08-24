@@ -1,11 +1,13 @@
 import { Inngest } from "inngest";
 import { connectDB } from "./conectionDB.js";
 import { User } from "../models/User.model.js";
+import { ENV } from "./env.js";
 
 // Create a client to send and receive events
 export const inngest = new Inngest({
   id: "slack_clone",
-  name: "Slack Clone Functions"
+  name: "Slack Clone Functions",
+  clientSecret: ENV.INNGEST_SIGN_KEY,
 });
 
 // Create an Inngest function: Sync user from Clerk
