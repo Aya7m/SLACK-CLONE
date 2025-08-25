@@ -2,6 +2,7 @@ import { Inngest } from "inngest";
 import { connectDB } from "./conectionDB.js";
 import { User } from "../models/User.model.js";
 import { ENV } from "./env.js";
+import { upsertStreamUser } from "./stream.js";
 
 // Create a client to send and receive events
 export const inngest = new Inngest({
@@ -27,6 +28,12 @@ const syncUser = inngest.createFunction(
     };
 
     await User.create(newUser);
+
+    await upsertStreamUser({
+      id:newUser.clerkId.toString(),
+      name:newUser.name,
+      image:newUser.image
+    });
   }
 );
 
@@ -41,6 +48,7 @@ const deleteUserFromDB = inngest.createFunction(
 
     await User.deleteOne({ clerkId: id });
     // TODO: delete user data from other collections
+    await deleteStreamUser(id.toString());
   }
 );
 
